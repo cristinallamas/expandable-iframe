@@ -23,7 +23,7 @@ function Expander(container) {
   }
   this.expand = function(containerHeight,transition,time) {
 
-    // Resize according to the container height.
+    // Resize iframe
     this.wrapper.style.height = containerHeight;
     // Apply CSS transition.
     animate(transition,time);
@@ -31,8 +31,6 @@ function Expander(container) {
   }.bind(this);
 
   this.collapse = function(transition,time) {
-
-    container.style.height = wrapperHeight + 'px';
 
     this.wrapper.style.height = wrapperHeight + 'px';
     // Apply CSS transition.
