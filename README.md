@@ -15,8 +15,14 @@ This is the css transition to apply to that resizing.
 
 ```
 var iframeExpand = require('expandable-iframe');
-
+// grab a dom element lets say variable container
 var expanderInstance = new iframeExpand(container);
+// Define your transition here.
+var transition = 'linear';
+var timeinSeconds = 0.5;
+
+expanderInstance.expand(container.style.height,transition,timeinSeconds);
+expanderInstance.collapse(transition,timeinSeconds);
 
 
 ```
