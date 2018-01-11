@@ -1,6 +1,6 @@
 {
   "name": "expandable-iframe",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Expand parent iframe when resizing child container.",
   "main": "index.js",
   "scripts": {

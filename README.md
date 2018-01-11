@@ -16,9 +16,7 @@ This is the css transition to apply to that resizing.
 ```
 var iframeExpand = require('expandable-iframe');
 
+var expanderInstance = new iframeExpand(container);
 
-var transition = '0.5s linear';
-var distance = '50px';
-iframeExpand(transition,distance);
 
 ```

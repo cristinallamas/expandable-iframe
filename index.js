@@ -1,32 +1,62 @@
-'use strict';
-// Grab id from iframe.
-const id = window.frameElement.id;
-// Greab the iframe.
-const iframe = window.parent.document.getElementById(id);
-// Store the value of the initial height of the iframe.
-const initialIframeHeight = iframe.style.height;
 
-var Expander = {
-  // Function that expands iframe up to the height defined in distance.
-  expand: function(transition,distance) {
-    var containerNode = (iframe === null) ? null : iframe.parentNode;
-    if (containerNode === null) return null;
-    containerNode.style.height = distance;
-    iframe.style.height = distance;
-    iframe.style.transition = transition;
-    containerNode.style.transition = transition;
-  },
+function Expander(container) {
 
-  // Function that collapses the iframe to its initial state.
-  collapse: function(transition){
-    var containerNode = (iframe === null) ? null : iframe.parentNode;
-    if (containerNode === null) return null;
-    containerNode.style.height = initialIframeHeight;
-    iframe.style.height = initialIframeHeight;
-    iframe.style.transition = transition;
-    containerNode.style.transition = transition;
+  // is an iframe
+  if(window.frameElement !== null){
+    // Grab iframe id.
+    this.id = (window.frameElement.id === null) ? null : window.frameElement.id;
+    // wrapper = iframe.
+    this.wrapper = window.parent.document.getElementById(this.id);
   }
+  else{
+    if(container){
+      // if not an iframe we grab the parent div.
+      this.wrapper = container.parentNode;
+    }
+  }
+  // Grab original (on load) height of wrapper.
+  var wrapperHeight = this.wrapper.clientHeight;
 
-};
+
+  this.assignVariables = function(){
+
+  }
+  this.expand = function(containerHeight,transition,time) {
+
+    // Resize according to the container height.
+    this.wrapper.style.height = containerHeight;
+    // Apply CSS transition.
+    animate(transition,time);
+
+  }.bind(this);
+
+  this.collapse = function(transition,time) {
+
+    container.style.height = wrapperHeight + 'px';
+
+    this.wrapper.style.height = wrapperHeight + 'px';
+    // Apply CSS transition.
+    animate(transition,time);
+
+
+  }.bind(this);
+
+  var animate = function(transition,time) {
+      var start = Date.now();
+      var loop = function() {
+          container.style.transitionTimingFunction = transition;
+          container.style.transitionDuration = time + 's';
+          this.wrapper.style.transitionTimingFunction = transition;
+          this.wrapper.style.transitionDuration = time+'s';
+          // Stop running after transition stops.
+          if (Date.now() - start < stop) {
+            requestAnimationFrame(loop);
+          }
+      }.bind(this);
+
+      loop(); // fire the initial loop
+
+  }.bind(this);
+}
 
 module.exports = Expander;
